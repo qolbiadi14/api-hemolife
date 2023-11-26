@@ -1,13 +1,5 @@
 require('dotenv').config();
 
-const {
-    DB_USERNAME,
-    DB_PASSWORD,
-    DB_HOSTNAME,
-    DB_NAME,
-    DB_DIALECT,
-} = process.env;
-
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');

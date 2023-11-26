@@ -11,6 +11,8 @@
     "dotenv": "^16.3.1",
     "express": "~4.16.1",
     "morgan": "~1.9.1",
+    "mysql2": "^3.6.5",
+    "nanoid": "^5.0.3",
     "nodemon": "^3.0.1",
     "sequelize": "^6.34.0",
     "sequelize-cli": "^6.6.2"
