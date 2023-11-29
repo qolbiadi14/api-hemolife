@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
 	const LokasiPmi = sequelize.define(
-		'LokasiPmi',
+		"LokasiPmi",
 		{
 			id_lokasi_pmi: {
 				type: DataTypes.STRING,
@@ -39,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
 			},
 		},
 		{
-			tableName: 'lokasi_pmi',
+			tableName: "lokasi_pmi",
 			timestamps: false,
 		}
 	);

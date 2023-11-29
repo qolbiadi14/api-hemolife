@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
 	const GolDarah = sequelize.define(
-		'GolDarah',
+		"GolDarah",
 		{
 			id_gol_darah: {
 				type: DataTypes.STRING,
@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
 			},
 		},
 		{
-			tableName: 'gol_darah',
+			tableName: "gol_darah",
 			timestamps: false,
 		}
 	);
