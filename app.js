@@ -10,6 +10,7 @@ var usersRouter = require("./routes/users");
 var loginRouter = require("./routes/login");
 var registerRouter = require("./routes/register");
 var profileRouter = require("./routes/profile");
+var adminRouter = require("./routes/admin");
 
 var app = express();
 
@@ -24,5 +25,6 @@ app.use("/users", usersRouter);
 app.use("/v1/auth/login", loginRouter);
 app.use("/v1/auth/register", registerRouter);
 app.use("/v1/user/userProfile", profileRouter);
+app.use("/v1/admin/admin", adminRouter);
 
 module.exports = app;
