@@ -26,6 +26,20 @@ module.exports = {
 				id_gol_darah: "i4vRI",
 				jumlah_kantong_darah: 60,
 			},
+
+			{
+				id_bank_darah: nanoid(5),
+				id_lokasi_pmi: "OsQ6J",
+				id_gol_darah: "47SZe",
+				jumlah_kantong_darah: 33,
+			},
+
+			{
+				id_bank_darah: nanoid(5),
+				id_lokasi_pmi: "OsQ6J",
+				id_gol_darah: "eJgku",
+				jumlah_kantong_darah: 81,
+			},
 		]);
 	},
 
