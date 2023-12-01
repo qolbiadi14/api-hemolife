@@ -3,10 +3,12 @@ var router = express.Router();
 
 const {
 	getAllBloodBank,
-	getBloodBankByPmiLocation,
+	getBloodBankByPmiId,
+	updateBloodBankByPmiId,
 } = require("../controllers/adminController");
 
 router.get("/dashboardAdmin", getAllBloodBank);
-router.get("/bankDarah/:id", getBloodBankByPmiLocation);
+router.get("/bankDarah/:id", getBloodBankByPmiId);
+router.put("/bankDarah/:id", updateBloodBankByPmiId);
 
 module.exports = router;

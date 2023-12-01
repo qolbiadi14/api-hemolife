@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
-	const DashboardAdmin = sequelize.define(
-		"DashboardAdmin",
+	const BankDarah = sequelize.define(
+		"BankDarah",
 		{
 			id_bank_darah: {
 				type: DataTypes.STRING,
@@ -24,10 +24,10 @@ module.exports = (sequelize, DataTypes) => {
 		}
 	);
 
-	DashboardAdmin.associate = function (models) {
-		DashboardAdmin.belongsTo(models.LokasiPmi, { foreignKey: "id_lokasi_pmi" });
-		DashboardAdmin.belongsTo(models.GolDarah, { foreignKey: "id_gol_darah" });
+	BankDarah.associate = function (models) {
+		BankDarah.belongsTo(models.LokasiPmi, { foreignKey: "id_lokasi_pmi" });
+		BankDarah.belongsTo(models.GolDarah, { foreignKey: "id_gol_darah" });
 	};
 
-	return DashboardAdmin;
+	return BankDarah;
 };
