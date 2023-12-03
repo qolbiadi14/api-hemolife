@@ -1,8 +1,9 @@
-const { BankDarah, GolDarah, LokasiPmi } = require("../models");
+const { BankDarah, GolDarah, LokasiPmi, TraDonor, User } = require("../models");
 const Validator = require("fastest-validator");
 
 const v = new Validator();
 
+// Mendapatkan data semua jumlah kantong darah
 const getAllBloodBank = async (req, res) => {
 	try {
 		const bankDarah = await BankDarah.findAll({
@@ -35,6 +36,7 @@ const getAllBloodBank = async (req, res) => {
 	}
 };
 
+// Mendapatkan jumlah kantong darah berdasarkan id lokasi pmi
 const getBloodBankByPmiId = async (req, res) => {
 	try {
 		const idLokPmi = req.params.id;
@@ -75,6 +77,7 @@ const getBloodBankByPmiId = async (req, res) => {
 	}
 };
 
+// Mengupdate jumlah kantong darah berdasarkan id lokasi pmi
 const updateBloodBankByPmiId = async (req, res) => {
 	try {
 		const { jumlah_kantong_darah, id_gol_darah } = req.body;
@@ -107,15 +110,55 @@ const updateBloodBankByPmiId = async (req, res) => {
 			return res.status(400).json(validate);
 		}
 
-		const updatedBloodBank = await bankDarah.update({
+		const updateBankDarah = await bankDarah.update({
 			jumlah_kantong_darah: jumlah_kantong_darah,
 		});
 
 		const result = {
 			message: "Jumlah kantong darah berhasil diubah",
-			stok_bank_darah: updatedBloodBank,
+			stok_bank_darah: updateBankDarah,
 		};
 		res.status(200).json(result);
+	} catch (error) {
+		res.status(500).json({
+			message: "Server Error",
+			serveMessage: error,
+		});
+	}
+};
+
+// Mendapatkan semua data pendonor darah
+const getAllBloodDonors = async (req, res) => {
+	try {
+		const pendonor = await TraDonor.findAll({
+			attributes: [
+				"id_tra_donor",
+				"id_user",
+				"id_gol_darah",
+				"id_lokasi_pmi",
+				"tgl_donor",
+				"status",
+			],
+
+			include: [
+				{
+					model: User,
+					attributes: [
+						"id_user",
+						"nama",
+						"email",
+						"no_hp",
+						"jenis_kelamin",
+						"tanggal_lahir",
+						"alamat",
+					],
+				},
+				{ model: GolDarah, attributes: ["gol_darah"] },
+				{ model: LokasiPmi, attributes: ["nama", "alamat"] },
+			],
+		});
+
+		res.json(pendonor);
 	} catch (error) {
 		res.status(500).json({
 			message: "Server Error",
@@ -128,4 +171,5 @@ module.exports = {
 	getAllBloodBank,
 	getBloodBankByPmiId,
 	updateBloodBankByPmiId,
+	getAllBloodDonors,
 };
