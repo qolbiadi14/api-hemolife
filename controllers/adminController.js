@@ -14,11 +14,9 @@ const v = new Validator();
 const getAllBloodBank = async (req, res) => {
 	try {
 		const bankDarah = await BankDarah.findAll({
-			attributes: [
-				"id_bank_darah",
-				"id_lokasi_pmi",
-				"id_gol_darah",
-				"jumlah_kantong_darah",
+			include: [
+				{ model: LokasiPmi, attributes: ["nama"] },
+				{ model: GolDarah, attributes: ["gol_darah"] },
 			],
 		});
 

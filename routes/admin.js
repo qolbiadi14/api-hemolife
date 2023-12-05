@@ -13,9 +13,9 @@ const { authenticateToken } = require("../middleware/middleware");
 
 router.get("/dashboardAdmin", getAllBloodBank);
 router.get("/bankDarah/:id", getBloodBankByPmiId);
-router.put("/bankDarah/:id", updateBloodBankByPmiId);
+router.put("/bankDarah/update/:id", updateBloodBankByPmiId);
 router.get("/pendonorDarah", getAllBloodDonors);
 router.get("/adminProfile", authenticateToken, adminProfile);
-router.put("/adminProfile", authenticateToken, updateAdminProfile);
+router.put("/adminProfile/update", authenticateToken, updateAdminProfile);
 
 module.exports = router;
