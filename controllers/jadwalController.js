@@ -18,6 +18,7 @@ exports.getAllJadwal = async (req, res) => {
 exports.getAllJadwalById = async (req, res) => {
   try {
     const idLokPmi = req.params.id;
+
     const jadwalData = await Jadwal.findAll({
       where: { id_lokasi_pmi: idLokPmi },
       include: [
@@ -47,24 +48,35 @@ exports.getAllJadwalById = async (req, res) => {
     });
 
     const transformedData = jadwalData.map((jadwal) => {
-      return {
-        id_lok_pmi: jadwal.LokasiPmi.id_lokasi_pmi,
-        jumlah_kantong_darah: jadwal.BankDarah.jumlah_kantong_darah,
-        nama_lok_pmi: jadwal.LokasiPmi.nama,
-        alamat_pmi: jadwal.LokasiPmi.alamat,
-        no_telpon_pmi: jadwal.LokasiPmi.no_telpon,
-        email_pmi: jadwal.LokasiPmi.email,
-        latitude: jadwal.LokasiPmi.latitude,
-        longitude: jadwal.LokasiPmi.longitude,
-      };
+      // Check if BankDarah is defined
+      const bankDarah = jadwal.BankDarah;
+      if (bankDarah) {
+        return {
+          id_lok_pmi: jadwal.LokasiPmi.id_lokasi_pmi,
+          jumlah_kantong_darah: bankDarah.jumlah_kantong_darah,
+          nama_lok_pmi: jadwal.LokasiPmi.nama,
+          alamat_pmi: jadwal.LokasiPmi.alamat,
+          no_telpon_pmi: jadwal.LokasiPmi.no_telpon,
+          email_pmi: jadwal.LokasiPmi.email,
+          latitude: jadwal.LokasiPmi.latitude,
+          longitude: jadwal.LokasiPmi.longitude,
+        };
+      } else {
+        return null; // or any other value indicating the absence of BankDarah
+      }
     });
 
-    res.json({ success: true, data: transformedData });
+    // Filter out null values
+    const filteredData = transformedData.filter((data) => data !== null);
+
+    res.json({ success: true, data: filteredData });
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false, error: "Internal Server Error" });
   }
 };
+
+
 
 exports.postJadwalDaftar = async (req, res) => {
   try {
@@ -109,7 +121,7 @@ exports.postJadwalDaftar = async (req, res) => {
         id_pendonor: newDonorRegistration.id_tra_donor,
         status_donor: newDonorRegistration.status,
         gol_darah: golDarah.gol_darah,
-        lokasi_pmi: lokasiPmi.nama, // Change this based on your requirement
+        lokasi_pmi: lokasiPmi.nama,
         tanggal_donor: newDonorRegistration.tgl_donor,
         message: "Donor registration successful",
       },

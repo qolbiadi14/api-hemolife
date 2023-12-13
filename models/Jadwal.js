@@ -1,3 +1,4 @@
+// model Jadwal.js
 module.exports = (sequelize, DataTypes) => {
   const Jadwal = sequelize.define(
     "Jadwal",
@@ -27,8 +28,8 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   Jadwal.associate = function (models) {
-    // Correct the association with BankDarah
-    Jadwal.hasOne(models.BankDarah, { foreignKey: "id_lokasi_pmi" });
+    // Use hasMany for the association with BankDarah
+    Jadwal.hasMany(models.BankDarah, { foreignKey: "id_lokasi_pmi" });
 
     // Add other associations as needed
     Jadwal.belongsTo(models.LokasiPmi, { foreignKey: "id_lokasi_pmi" });
