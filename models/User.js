@@ -1,7 +1,4 @@
-const { DataTypes } = require("sequelize");
-const { sequelize } = require(".");
 const { nanoid } = require("nanoid");
-const bcrypt = require("bcrypt");
 
 module.exports = (sequelize, DataTypes) => {
     const User = sequelize.define(
@@ -54,6 +51,11 @@ module.exports = (sequelize, DataTypes) => {
         password: {
           type: DataTypes.STRING,
           allowNull: false,
+        },
+        sts_volunteer: {
+          type: DataTypes.TINYINT,
+          allowNull: false,
+          defaultValue: 0,
         },
       },
       {

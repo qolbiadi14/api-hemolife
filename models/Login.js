@@ -1,5 +1,3 @@
-const { DataTypes } = require("sequelize");
-const { sequelize } = require(".");
 const { nanoid } = require("nanoid");
 const bcrypt = require("bcrypt");
 
