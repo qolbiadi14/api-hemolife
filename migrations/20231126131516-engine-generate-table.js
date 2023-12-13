@@ -68,52 +68,8 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-    });
-
-    // Tambah tabel volunteer
-    await queryInterface.createTable("volunteer", {
-      id_volunteer: {
-        type: Sequelize.STRING,
-        primaryKey: true,
-        allowNull: false,
-      },
-      id_gol_darah: {
-        type: Sequelize.STRING,
-        references: {
-          model: "gol_darah",
-          key: "id_gol_darah",
-        },
-        onUpdate: "CASCADE",
-        onDelete: "SET NULL",
-      },
-      nama: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      email: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true,
-      },
-      no_hp: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true,
-      },
-      jenis_kelamin: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        validate: {
-          isIn: [["Laki-laki", "Perempuan"]],
-        },
-      },
-      alamat: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      status: {
+      sts_volunteer: {
         type: Sequelize.TINYINT,
-        defaultValue: 0,
         allowNull: false,
       },
     });
@@ -287,7 +243,7 @@ module.exports = {
 
     // Tambah tabel tra_req_darah
     await queryInterface.createTable("tra_req_darah", {
-      tra_req_darah: {
+      id_tra_req_darah: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
@@ -321,6 +277,10 @@ module.exports = {
         onDelete: "SET NULL",
       },
       tgl_req_darah: {
+        type: Sequelize.DATE,
+        allowNull: false,
+      },
+      tgl_expired: {
         type: Sequelize.DATE,
         allowNull: false,
       },

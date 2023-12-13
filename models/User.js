@@ -52,6 +52,11 @@ module.exports = (sequelize, DataTypes) => {
           type: DataTypes.STRING,
           allowNull: false,
         },
+        sts_volunteer: {
+          type: DataTypes.TINYINT,
+          allowNull: false,
+          defaultValue: 0,
+        },
       },
       {
         tableName: "user",

@@ -57,6 +57,7 @@ exports.updateUserProfile = async (req, res) => {
           }
         },
       },
+      sts_volunteer: "number|optional",
       phoneNumber: { type: "string", optional: true },
     };
 
