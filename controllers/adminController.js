@@ -1,4 +1,11 @@
-const { BankDarah, GolDarah, LokasiPmi, TraDonor, User } = require("../models");
+const {
+	BankDarah,
+	GolDarah,
+	LokasiPmi,
+	TraDonor,
+	User,
+	Admin,
+} = require("../models");
 const Validator = require("fastest-validator");
 
 const v = new Validator();
@@ -7,11 +14,9 @@ const v = new Validator();
 const getAllBloodBank = async (req, res) => {
 	try {
 		const bankDarah = await BankDarah.findAll({
-			attributes: [
-				"id_bank_darah",
-				"id_lokasi_pmi",
-				"id_gol_darah",
-				"jumlah_kantong_darah",
+			include: [
+				{ model: LokasiPmi, attributes: ["nama"] },
+				{ model: GolDarah, attributes: ["gol_darah"] },
 			],
 		});
 
@@ -48,12 +53,6 @@ const getBloodBankByPmiId = async (req, res) => {
 				{ model: LokasiPmi, as: "LokasiPmi" },
 				{ model: GolDarah, as: "GolDarah" },
 			],
-
-			// jika ingin outputnya dicustome
-			// include: [
-			// 	{ model: LokasiPmi, as: 'LokasiPmi', attributes: ['nama'] },
-			// 	{ model: GolDarah, as: 'GolDarah', attributes: ['gol_darah'] },
-			// ],
 		});
 
 		if (bankDarah.length > 0) {
@@ -158,7 +157,19 @@ const getAllBloodDonors = async (req, res) => {
 			],
 		});
 
-		res.json(pendonor);
+		if (pendonor.length > 0) {
+			const result = {
+				message: "Berhasil menampilkan seluruh pendonor darah",
+				pendonor: pendonor,
+			};
+			res.json(result);
+		} else {
+			const error = {
+				message: "Pendonor darah tidak ditemukan!",
+				pendonor: null,
+			};
+			res.status(404).json(error);
+		}
 	} catch (error) {
 		res.status(500).json({
 			message: "Server Error",
@@ -167,9 +178,87 @@ const getAllBloodDonors = async (req, res) => {
 	}
 };
 
+// Profil admin
+const adminProfile = async (req, res) => {
+	try {
+		const admin = await Admin.findOne({
+			where: { id_admin: req.user.adminId },
+		});
+
+		if (!admin) {
+			const error = {
+				message: "Admin not found",
+				admin: null,
+			};
+			return res.status(404).json(error);
+		} else {
+			const result = {
+				message: "Admin profile retrieved successfully",
+				admin: admin,
+			};
+			res.status(200).json(result);
+		}
+	} catch (error) {
+		res.status(500).json({
+			message: "Server Error",
+			serveMessage: error,
+		});
+	}
+};
+
+// Update profil admin
+const updateAdminProfile = async (req, res) => {
+	try {
+		const admin = await Admin.findOne({
+			where: { id_admin: req.user.adminId },
+		});
+
+		if (!admin) {
+			const error = {
+				message: "Admin not found",
+				admin: null,
+			};
+			return res.status(404).json(error);
+		}
+
+		const schema = {
+			nama: "string|optional",
+			email: "email|optional",
+		};
+
+		const validate = v.validate(req.body, schema);
+
+		if (validate.length) {
+			return res.status(400).json(validate);
+		}
+
+		const { nama, email } = req.body;
+
+		const updateAdminProfile = await admin.update({
+			nama,
+			email,
+		});
+
+		const result = {
+			message: "Admin profile updated successfully",
+			admin: updateAdminProfile,
+		};
+
+		res.status(200).json(result);
+	} catch (error) {
+		res.status(500).json({
+			message: "Server Error",
+			serveMessage: error,
+		});
+		console.log(error);
+	}
+};
+
 module.exports = {
 	getAllBloodBank,
 	getBloodBankByPmiId,
 	updateBloodBankByPmiId,
 	getAllBloodDonors,
+	adminProfile,
+	updateAdminProfile,
 };
