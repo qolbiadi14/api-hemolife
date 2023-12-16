@@ -64,5 +64,9 @@ module.exports = (sequelize, DataTypes) => {
       }
     );
 
+  User.associate = function (models) {
+    User.belongsTo(models.GolDarah, { foreignKey: "id_gol_darah" });
+  };
+
     return User;
 }
