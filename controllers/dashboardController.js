@@ -1,5 +1,4 @@
 const {
-  Jadwal,
   GolDarah,
   LokasiPmi,
   TraDonor,
@@ -36,6 +35,15 @@ exports.getDashboardUser = async (req, res) => {
       ],
     });
 
+    const pendonor = traDonor
+      ? {
+          id_donor: traDonor.id_tra_donor,
+          gol_darah: traDonor.GolDarah.gol_darah,
+          lokasi_pmi: traDonor.LokasiPmi ? traDonor.LokasiPmi.nama : null,
+          tanggal_donor: traDonor.tgl_donor.toISOString().split("T")[0],
+        }
+      : null;
+
     // Build the response object
     const response = {
       sukarelawan_menerima: {
@@ -68,12 +76,7 @@ exports.getDashboardUser = async (req, res) => {
           : null,
         alamat: userRequesterData ? userRequesterData.alamat : null,
       },
-      pendonor: {
-        id_donor: traDonor.id_tra_donor,
-        gol_darah: traDonor.GolDarah.gol_darah,
-        lokasi_pmi: traDonor.LokasiPmi.nama,
-        tanggal_donor: traDonor.tgl_donor.toISOString().split("T")[0], // Format date as "YYYY-MM-DD"
-      },
+      pendonor: pendonor,
     };
 
     res.json([response]);
