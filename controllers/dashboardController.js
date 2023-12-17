@@ -3,7 +3,6 @@ const {
   GolDarah,
   LokasiPmi,
   TraDonor,
-  ReqDarah,
   TraReqDarah,
   User,
   sequelize,
@@ -23,7 +22,7 @@ exports.getDashboardUser = async (req, res) => {
     });
 
     // Fetch data for the logged-in user as the requester (id_user_req)
-    const userRequesterData = await ReqDarah.findOne({
+    const userRequesterData = await TraReqDarah.findOne({
       where: { id_user_req: userId, status: 2 }, // Fetch only for status 2 (menerima)
       include: [{ model: GolDarah, attributes: ["id_gol_darah", "gol_darah"] }, { model: GolDarah, attributes: ["id_gol_darah", "gol_darah"] }],
     });
