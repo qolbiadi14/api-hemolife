@@ -1,6 +1,6 @@
 // registerController.js
 const { nanoid } = require("nanoid");
-const { User } = require("../models");
+const { User, GolDarah } = require("../models");
 const bcrypt = require("bcrypt");
 const Validator = require("fastest-validator");
 
@@ -74,5 +74,18 @@ exports.registerUser = async (req, res) => {
     // Handle general errors
     console.error("Error during user creation:", error);
     res.status(500).json({ message: "Terjadi kesalahan saat menyimpan data." });
+  }
+};
+
+exports.getDarah = async (req, res) => {
+  try {
+    const golDarah = await GolDarah.findAll({
+    });
+
+    // Send the jadwal data as a response
+    res.json({ success: true, data: golDarah });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, error: "Internal Server Error" });
   }
 };
