@@ -261,8 +261,8 @@ module.exports = {
       id_user_volunteer: {
         type: Sequelize.STRING,
         references: {
-          model: "volunteer",
-          key: "id_volunteer",
+          model: "user",
+          key: "id_user",
         },
         onUpdate: "CASCADE",
         onDelete: "SET NULL",
@@ -294,7 +294,6 @@ module.exports = {
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable("gol_darah");
     await queryInterface.dropTable("user");
-    await queryInterface.dropTable("volunteer");
     await queryInterface.dropTable("lokasi_pmi");
     await queryInterface.dropTable("jadwal");
     await queryInterface.dropTable("bank_darah");
