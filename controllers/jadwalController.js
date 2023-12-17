@@ -138,6 +138,13 @@ exports.postJadwalDaftar = async (req, res) => {
         .json({ success: false, message: "Invalid gol_darah" });
     }
 
+    // Check if the provided lokasi_pmi exists
+    const lokasiPmi = await LokasiPmi.findOne({ where: { id_lokasi_pmi } });
+    if (!lokasiPmi) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Invalid lokasi_pmi" });
+    }
 
     // Perform the donor registration
     const newDonorRegistration = await TraDonor.create({
