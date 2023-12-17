@@ -14,21 +14,42 @@ const {
 exports.getAllJadwalPerDay = async (req, res) => {
   try {
     const d = new Date();
-    let getday = d.getDay()
+    let getday = d.getDay();
 
-    let hari = [
-      "MINGGU", "SENIN", "SELASA", "RABU", "KAMIS", "JUMAT", "SABTU"
-    ]
+    let hari = ["MINGGU", "SENIN", "SELASA", "RABU", "KAMIS", "JUMAT", "SABTU"];
 
     // Fetch jadwal records for the specified day from the database
     const jadwalData = await Jadwal.findAll({
       where: {
         jadwal_hari: hari[getday],
       },
+      include: [
+        {
+          model: LokasiPmi,
+          attributes: [
+            "id_lokasi_pmi",
+            "nama",
+            "alamat",
+            "latitude",
+            "longitude",
+          ],
+        },
+      ],
     });
 
-    // Send the jadwal data as a response
-    res.json({ success: true, data: jadwalData });
+    // Format the response
+    const formattedData = jadwalData.map((jadwal) => ({
+      id_lok_pmi: jadwal.LokasiPmi.id_lokasi_pmi,
+      nama_lok_pmi: jadwal.LokasiPmi.nama,
+      alamat_pmi: jadwal.LokasiPmi.alamat,
+      jadwal_jam_mulai: jadwal.jadwal_jam_mulai,
+      jadwal_jam_selesai: jadwal.jadwal_jam_selesai,
+      latitude: jadwal.LokasiPmi.latitude,
+      longitude: jadwal.LokasiPmi.longitude,
+    }));
+
+    // Send the formatted jadwal data as a response
+    res.json({ success: true, data: formattedData });
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false, error: "Internal Server Error" });
