@@ -21,7 +21,6 @@ exports.getDashboardUser = async (req, res) => {
       where: { id_user: userId },
       include: [
         { model: GolDarah, attributes: ["id_gol_darah", "gol_darah"] },
-        { model: LokasiPmi, attributes: ["id_lokasi_pmi", "nama", "alamat"] },
       ],
     });
 
@@ -45,7 +44,6 @@ exports.getDashboardUser = async (req, res) => {
       where: { id_user_req: userId, status: 0 },
       include: [
         { model: GolDarah, attributes: ["id_gol_darah", "gol_darah"] },
-        { model: LokasiPmi, attributes: ["id_lokasi_pmi", "nama", "alamat"] },
       ],
     });
 
