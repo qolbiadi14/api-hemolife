@@ -13,6 +13,7 @@ var profileRouter = require("./routes/profile");
 var adminRouter = require("./routes/admin");
 var jadwalRouter = require("./routes/jadwal");
 var volunteerRouter = require("./routes/volunteer");
+var dashboardRouter = require("./routes/dashboard")
 
 var app = express();
 
@@ -30,5 +31,6 @@ app.use("/v1/user/userProfile", profileRouter);
 app.use("/v1/admin", adminRouter);
 app.use("/v1/user/jadwal", jadwalRouter);
 app.use("/v1/user/volunteer", volunteerRouter);
+app.use("/v1/user/dashboardUser", dashboardRouter);
 
 module.exports = app;

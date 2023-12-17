@@ -17,6 +17,9 @@ module.exports = (sequelize, DataTypes) => {
       id_lokasi_pmi: {
         type: DataTypes.STRING,
       },
+      id_gol_darah: {
+        type: DataTypes.STRING,
+      },
       tgl_req_darah: {
         type: DataTypes.DATE,
         allowNull: false,
@@ -34,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   TraReqdarah.associate = function (models) {
-    TraReqdarah.belongsTo(models.User, { foreignKey: "id_user" });
+    TraReqdarah.belongsTo(models.User, { foreignKey: "id_user_req" });
     TraReqdarah.belongsTo(models.GolDarah, { foreignKey: "id_gol_darah" });
     TraReqdarah.belongsTo(models.LokasiPmi, { foreignKey: "id_lokasi_pmi" });
   };

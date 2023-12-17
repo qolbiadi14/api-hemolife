@@ -267,11 +267,11 @@ module.exports = {
         onUpdate: "CASCADE",
         onDelete: "SET NULL",
       },
-      id_lokasi_pmi: {
+      id_gol_darah: {
         type: Sequelize.STRING,
         references: {
-          model: "lokasi_pmi",
-          key: "id_lokasi_pmi",
+          model: "gol_darah",
+          key: "id_gol_darah",
         },
         onUpdate: "CASCADE",
         onDelete: "SET NULL",

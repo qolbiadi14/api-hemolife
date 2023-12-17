@@ -81,6 +81,7 @@ exports.requestVolunteer = async (req, res) => {
     const newRequest = await TraReqDarah.create({
       id_user_req,
       id_user_volunteer: id_user,
+      id_gol_darah: gol_darah,
       tgl_req_darah,
       tgl_expired,
       status: 1,
