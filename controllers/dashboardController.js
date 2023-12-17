@@ -3,6 +3,7 @@ const {
   GolDarah,
   LokasiPmi,
   TraDonor,
+  ReqDarah,
   TraReqDarah,
   User,
   sequelize,
@@ -13,10 +14,6 @@ exports.getDashboardUser = async (req, res) => {
   try {
     const userId = req.user.userId;
 
-    const user = await User.findByPk(userId, {
-      include: [{ model: GolDarah, attributes: ["id_gol_darah", "gol_darah"] }],
-    });
-
     const traDonor = await TraDonor.findOne({
       where: { id_user: userId },
       include: [
@@ -26,19 +23,11 @@ exports.getDashboardUser = async (req, res) => {
     });
 
     // Fetch data for the logged-in user as the requester (id_user_req)
-    const userRequesterData = await TraReqDarah.findOne({
+    const userRequesterData = await ReqDarah.findOne({
       where: { id_user_req: userId, status: 2 }, // Fetch only for status 2 (menerima)
-      include: [{ model: GolDarah, attributes: ["id_gol_darah", "gol_darah"] }],
+      include: [{ model: GolDarah, attributes: ["id_gol_darah", "gol_darah"] }, { model: GolDarah, attributes: ["id_gol_darah", "gol_darah"] }],
     });
 
-    // Fetch data for volunteers (sts_volunteer = 1 and excluding the logged-in user)
-    const volunteerData = await User.findOne({
-      where: {
-        sts_volunteer: 1,
-        id_user: { [Sequelize.Op.ne]: userId }, // Exclude the logged-in user
-      },
-      include: [{ model: GolDarah, attributes: ["id_gol_darah", "gol_darah"] }],
-    });
 
     // Fetch data for the logged-in user as the requester (id_user_req) for status 0 (menolak)
     const userRejectData = await TraReqDarah.findOne({

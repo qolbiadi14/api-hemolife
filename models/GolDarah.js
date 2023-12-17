@@ -21,7 +21,6 @@ module.exports = (sequelize, DataTypes) => {
   GolDarah.associate = function (models) {
     GolDarah.hasMany(models.BankDarah, { foreignKey: "id_gol_darah" });
     GolDarah.hasMany(models.TraDonor, { foreignKey: "id_gol_darah" });
-    GolDarah.hasMany(models.TraReqDarah, { foreignKey: "id_gol_darah" });
     GolDarah.hasMany(models.User, { foreignKey: "id_gol_darah" });
   };
 
