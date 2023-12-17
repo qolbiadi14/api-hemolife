@@ -33,7 +33,7 @@ exports.login = async (req, res) => {
           {
             userId: user.id_user,
             nama: user.nama,
-            goldarah: user.id_gol_darah,
+            id_gol_darah: user.id_gol_darah, // Updated property name
           },
           process.env.JWT_SECRET,
           {
