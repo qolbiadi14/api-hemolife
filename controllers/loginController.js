@@ -42,11 +42,13 @@ exports.login = async (req, res) => {
         );
 
         const loggedInUserId = user.id_user;
+        const loggedInGolDarah = user.id_gol_darah;
 
         return res.json({
           message: "User login successful",
           token,
           userId: loggedInUserId,
+          id_gol_darah: loggedInGolDarah,
         });
       }
     }
