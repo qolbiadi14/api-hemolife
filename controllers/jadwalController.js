@@ -102,7 +102,7 @@ exports.getDetailLocationById = async (req, res) => {
     });
 
     const formattedData = {
-      id_lokasi_pmi: lokasiPmiData.id_lokasi_pmi,
+      id_lok_pmi: lokasiPmiData.id_lokasi_pmi,
       nama: lokasiPmiData.nama,
       no_telpon: lokasiPmiData.no_telpon,
       alamat: lokasiPmiData.alamat,
