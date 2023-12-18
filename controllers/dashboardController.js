@@ -40,7 +40,11 @@ exports.getDashboardUser = async (req, res) => {
           id_donor: traDonor.id_tra_donor,
           gol_darah: traDonor.GolDarah.gol_darah,
           lokasi_pmi: traDonor.LokasiPmi ? traDonor.LokasiPmi.nama : null,
-          tanggal_donor: traDonor.tgl_donor.toISOString().split("T")[0],
+          tanggal_donor:
+            traDonor.tgl_donor >= new Date(new Date().setHours(0o0, 0o0, 0o0)) &&
+            traDonor.tgl_donor < new Date(new Date().setHours(23, 59, 59))
+              ? traDonor.tgl_donor.toISOString().split("T")[0]
+              : null,
         }
       : null;
 
